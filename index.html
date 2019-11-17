@@ -42,7 +42,7 @@
 
 <body>
 
-    <h2>Coinbase Crypto Couch Potato</h2>
+    <h1>Coinbase Crypto Couch Potato</h1>
 
     <table>
         <tr>
@@ -52,13 +52,20 @@
                     oninput="onTotalPortefolioUpdated(this.value)">
             </td>
         </tr>
+
         <tr>
-            <td>Ratio cash</td>
-            <td class="td-right">50%</td>
+            <td>Modify ratio</td>
+            <td><input type="range" id="ratioRange" name="volume"
+                min="0" max="100" value="50" step="5" 
+                oninput="onRatioRange(this.value)"></td>
         </tr>
         <tr>
             <td>Ratio crypto</td>
-            <td class="td-right">50%</td>
+            <td id="ratioCryptoTd" class="td-right">50 %</td>
+        </tr>
+        <tr>
+            <td>Ratio cash</td>
+            <td id="ratioCashTd" class="td-right">50 %</td>
         </tr>
         <tr>
             <td>Total market</td>
@@ -79,8 +86,9 @@
             <th>Price</th>
             <th>Target</th>
         </tr>
-
     </table>
+
+    <p>Made by Thomas Wostyn</p>
 
     <script>
         const BILLION = 1000000000;
@@ -163,7 +171,6 @@
         const resourcesMap = new Map();
         resources.forEach(r => resourcesMap.set(r.name, r));
 
-
         class Crypto {
             constructor(number, cryptoJson, totalMarket, totalCrypto) {
                 this.number = number;
@@ -180,15 +187,18 @@
             updateTotalCrypto(totalCrypto) {
                 this.target = roundDec(totalCrypto * this.weight, 3).concat(EUROS);
             }
-
         }
 
         class CrytoController {
             constructor() {
-                this.totalMarket = 0;
-                this.totalCrypto = 0;
-                this.totalMarketDisplay = "";
                 this.cryptos = [];
+
+                this.totalMarket = 0;
+                this.totalMarketDisplay = "";
+
+                this.totalPortefolio = 0;
+                this.ratioCrypto = 0.5;
+                this.totalCrypto = 0;
             }
 
             addJsonCrypto(jsonCrypto, index) {
@@ -200,9 +210,20 @@
                 this.totalMarket = totalMarket;
                 this.totalMarketDisplay = roundDec(totalMarket / BILLION, 3).concat(BILLION_EUROS);
             }
-            setTotalCrypto(totalCrypto) {
-                this.totalCrypto = totalCrypto;
-                this.cryptos.forEach(c => c.updateTotalCrypto(totalCrypto));
+
+            setTotalPortefolio(totalPortefolio) {
+                this.totalPortefolio = totalPortefolio;
+                this.computeCryptoTarget();
+            }
+
+            updateCryptoRatio(cryptoRatio) {
+                this.ratioCrypto = cryptoRatio;
+                this.computeCryptoTarget();
+            }
+
+            computeCryptoTarget() {
+                this.totalCrypto = this.totalPortefolio * this.ratioCrypto;
+                this.cryptos.forEach(c => c.updateTotalCrypto(this.totalCrypto));
             }
 
             target(pCryptoName) {
@@ -210,19 +231,17 @@
             }
         }
 
-
         let table = document.getElementById("table");
         let totalPortefolioInput = document.getElementById("totalPortefolio");
 
         let crytoController = new CrytoController();
-
 
         function main() {
             let xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     let data = JSON.parse(this.responseText).data.filter(availableCrytoPredicate);
-                    updateTable(data);
+                    initTable(data);
                 }
             };
             xmlhttp.open("GET", URL, true);
@@ -230,12 +249,11 @@
         }
 
 
-        function updateTable(data) {
+        function initTable(data) {
             let totalMarket = data.map(toMarket).reduce(sum);
             crytoController.setTotalMarket(totalMarket);
 
-            let totalCrypto = totalPortefolioInput.value / 2;
-            crytoController.setTotalCrypto(totalCrypto);
+            crytoController.setTotalPortefolio(totalPortefolioInput.value);
 
             data.forEach((jsonCrypto, index) => crytoController.addJsonCrypto(jsonCrypto, index));
 
@@ -260,9 +278,6 @@
                 nameCell.appendChild(img);
             }
             nameCell.appendChild(document.createTextNode(crypto.name));
-
-
-            // newRow.insertCell(1).appendChild(document.createTextNode(crypto.name));
             newRow.insertCell(2).appendChild(document.createTextNode(crypto.marketBillion.concat(BILLION_EUROS)));
             newRow.insertCell(3).appendChild(document.createTextNode(crypto.weightDisplay.concat(" %")));
             newRow.insertCell(4).appendChild(document.createTextNode(crypto.priceRounded.concat(EUROS)));
@@ -291,9 +306,23 @@
         }
 
         function onTotalPortefolioUpdated(portefolioInput) {
-            let totalCrypto = portefolioInput / 2;
-            crytoController.setTotalCrypto(totalCrypto);
+            crytoController.setTotalPortefolio(parseFloat(portefolioInput) );
+            updateTagetColumn();
+        }
 
+        function onRatioRange(ratioInput) {
+            let cryptoRatio100 = parseFloat(ratioInput);
+            let cashRatio100 = 100 - cryptoRatio100;
+
+            document.getElementById("ratioCryptoTd").innerHTML = cryptoRatio100 + " %";
+            document.getElementById("ratioCashTd").innerHTML = cashRatio100 + " %";
+
+            let cryptoRatio = cryptoRatio100 / 100;
+            crytoController.updateCryptoRatio(cryptoRatio);
+            updateTagetColumn();
+        }
+
+        function updateTagetColumn() {
             Array.from(table.rows)
                 .filter((row, index) => index != 0)
                 .forEach(updateTarget);
@@ -303,6 +332,7 @@
             let crypoName = row.cells[1].innerText;
             row.cells[5].innerHTML = crytoController.target(crypoName);
         }
+
         main();
     </script>
 
