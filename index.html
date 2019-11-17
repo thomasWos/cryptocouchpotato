@@ -53,12 +53,7 @@
             </td>
         </tr>
 
-        <tr>
-            <td>Modify ratio</td>
-            <td><input type="range" id="ratioRange" name="volume"
-                min="0" max="100" value="50" step="5" 
-                oninput="onRatioRange(this.value)"></td>
-        </tr>
+
         <tr>
             <td>Ratio crypto</td>
             <td id="ratioCryptoTd" class="td-right">50 %</td>
@@ -67,6 +62,14 @@
             <td>Ratio cash</td>
             <td id="ratioCashTd" class="td-right">50 %</td>
         </tr>
+
+        <tr>
+                <td>Modify ratio</td>
+                <td><input type="range" id="ratioRange" name="volume"
+                    min="0" max="100" value="50" step="5" 
+                    oninput="onRatioRange(this.value)"></td>
+            </tr>
+
         <tr>
             <td>Total market</td>
             <td id="totalMarket" class="td-right"></td>
