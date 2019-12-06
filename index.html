@@ -48,7 +48,7 @@
         <tr>
             <td>Total portefolio</td>
             <td class="td-right">
-                <input type="text" size="10" id="totalPortefolio" value="300"
+                <input type="text" size="10" id="totalPortefolio" value="400"
                     oninput="onTotalPortefolioUpdated(this.value)">
             </td>
         </tr>
@@ -97,6 +97,7 @@
         const BILLION = 1000000000;
         const EUROS = " \u20AC";
         const BILLION_EUROS = " B\u20AC";
+        const EXCLUDE_CRYPTO_NAMES = ["Bitcoin SV", "Single Collateral Dai"];
 
         const URL = "https://www.coinbase.com/api/v2/assets/summary?base=EUR&filter=listed";
 
@@ -297,7 +298,7 @@
         }
 
         function availableCrytoPredicate(crypto) {
-            return crypto.name != "Bitcoin SV"
+            return !EXCLUDE_CRYPTO_NAMES.includes(crypto.name);
         }
 
         function sum(e1, e2) {
