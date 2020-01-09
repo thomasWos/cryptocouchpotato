@@ -9,6 +9,11 @@
             margin: 15px;
         }
 
+        #cryptoTable {
+            margin-left:auto; 
+            margin-right:auto;
+        }
+
         td,
         th {
             border: 1px solid #dddddd;
@@ -21,7 +26,7 @@
         }
 
         tr:nth-child(even) {
-            background-color: #eeeeee;
+            background-color: #f8f8f8;
         }
 
         input[type="submit" i] {
@@ -80,7 +85,7 @@
         <input type="submit" formtarget="_blank" value="Create Coinbase Wallet" />
     </form>
 
-    <table id="table">
+    <table id="cryptoTable">
         <tr>
             <th>#</th>
             <th>Name</th>
@@ -235,7 +240,7 @@
             }
         }
 
-        let table = document.getElementById("table");
+        let table = document.getElementById("cryptoTable");
         let totalPortefolioInput = document.getElementById("totalPortefolio");
 
         let crytoController = new CrytoController();
