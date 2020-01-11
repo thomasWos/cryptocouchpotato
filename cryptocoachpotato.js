@@ -6,6 +6,10 @@ const EXCLUDE_CRYPTO_NAMES = ["Bitcoin SV", "Single Collateral Dai"];
 const ASSETS_URL = "https://www.coinbase.com/api/v2/assets/summary?base=EUR&filter=listed";
 const TOKEN_URL = "https://api.coinbase.com/oauth/token";
 
+const COINBASE_CLIENT_ID = "aef108d150b98e03eaa26334ec346213a02a837c144ab9eda556866513c1031c";
+const COINBASE_CLIENT_SECRET = "932a5e5807d78b98f39a3861040c9be13e352e5305085bc12143b42e4a785569";
+const COINBASE_REDIRECT_URI = "https://cryptocouchpotato.com"
+
 class Crypto {
     constructor(number, cryptoJson, totalMarket, totalCrypto) {
         this.number = number;
@@ -96,7 +100,12 @@ function exchangeCodeToToken(pCode) {
             console.info(this.responseText);
         }
     };
-    xmlhttp.open("POST", TOKEN_URL, true);
+    xmlhttp.open('POST', TOKEN_URL, true);
+    xmlhttp.setRequestHeader('grant_type','authorization_code');
+    xmlhttp.setRequestHeader('code', pCode);
+    xmlhttp.setRequestHeader('client_id', COINBASE_CLIENT_ID);
+    xmlhttp.setRequestHeader('client_secret', COINBASE_CLIENT_SECRET);
+    xmlhttp.setRequestHeader('redirect_uri', COINBASE_REDIRECT_URI);
     xmlhttp.send();
 }
 
