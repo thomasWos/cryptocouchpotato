@@ -107,7 +107,7 @@ function exchangeCodeToToken(pCode) {
     let param = 'grant_type=authorization_code';
     param = param + '&code=' + pCode;
     param = param + '&client_id=' + COINBASE_CLIENT_ID;
-    param = param + '&client_secret=' + COINBASE_CLIENT_SECRET;
+    // param = param + '&client_secret=' + COINBASE_CLIENT_SECRET;
     param = param + '&redirect_uri=' + COINBASE_REDIRECT_URI;
     console.info('param : ' + param);
     xmlhttp.send(param);
