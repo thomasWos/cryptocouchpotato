@@ -3,46 +3,7 @@
 
 <head>
     <title>Coinbase Crypto Couch Potato</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            margin: 15px;
-        }
-
-        #cryptoTable {
-            margin-left:auto; 
-            margin-right:auto;
-        }
-
-        td,
-        th {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 15px;
-        }
-
-        .td-right {
-            text-align: right;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f8f8f8;
-        }
-
-        input[type="submit" i] {
-            margin: 15px;
-            background-color:rgb(40, 84, 231);
-            border: none;
-            color: white;
-            padding: 15px 25px;
-            text-align: center;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        input[type="submit" i]:hover {
-            background-color: rgb(37, 79, 205);
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="cryptocouchpotato.css">
 </head>
 
 <body>
@@ -81,14 +42,8 @@
         </tr>
     </table>
 
-    <form action="https://www.coinbase.com/join/wostyn_u">
-        <input type="submit" formtarget="_blank" value="Create Coinbase Wallet" />
-    </form>
-
-    <form action="https://www.coinbase.com/oauth/authorize?client_id=aef108d150b98e03eaa26334ec346213a02a837c144ab9eda556866513c1031c&redirect_uri=https%3A%2F%2Fcryptocouchpotato.com&response_type=code&scope=wallet%3Auser%3Aread">
-        <input type="submit" formtarget="_blank" value="Connect to Coinbase" />
-    </form>
-
+    <p><a href="https://www.coinbase.com/join/wostyn_u">Create Coinbase Wallet</a></p>
+    <p><a href="https://www.coinbase.com/oauth/authorize?client_id=aef108d150b98e03eaa26334ec346213a02a837c144ab9eda556866513c1031c&redirect_uri=https%3A%2F%2Fcryptocouchpotato.com&response_type=code&scope=wallet%3Auser%3Aread">Connect to Coinbase (read only)</a></p>
 
     <table id="cryptoTable">
         <tr>
