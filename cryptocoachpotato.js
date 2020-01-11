@@ -108,7 +108,7 @@ function exchangeCodeToToken(pCode) {
     param = param + '&code=' + pCode;
     param = param + '&client_id=' + COINBASE_CLIENT_ID;
     param = param + '&client_secret=' + COINBASE_CLIENT_SECRET;
-    param = param + '&redirect_uri=' + encodeURIComponent(COINBASE_REDIRECT_URI);
+    param = param + '&redirect_uri=' + COINBASE_REDIRECT_URI;
     console.info('param : ' + param);
     xmlhttp.send(param);
 }
