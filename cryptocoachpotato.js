@@ -102,6 +102,8 @@ function exchangeCodeToToken(pCode) {
     };
 
     xmlhttp.open('POST', TOKEN_URL, true);
+    xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
     let param = 'grant_type=authorization_code';
     param = param + '&code=' + pCode;
     param = param + '&client_id=' + COINBASE_CLIENT_ID;
