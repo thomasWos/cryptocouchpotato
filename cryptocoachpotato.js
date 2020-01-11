@@ -94,8 +94,6 @@ function main() {
 }
 
 function exchangeCodeToToken(pCode) {
-    console.info("Code: " + pCode);
-
     let xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -107,7 +105,7 @@ function exchangeCodeToToken(pCode) {
     xmlhttp.setRequestHeader('code', pCode);
     xmlhttp.setRequestHeader('client_id', COINBASE_CLIENT_ID);
     xmlhttp.setRequestHeader('client_secret', COINBASE_CLIENT_SECRET);
-    xmlhttp.setRequestHeader('redirect_uri', COINBASE_REDIRECT_URI);
+    xmlhttp.setRequestHeader('redirect_uri', encodeURIComponent(COINBASE_REDIRECT_URI));
     xmlhttp.send();
 }
 
