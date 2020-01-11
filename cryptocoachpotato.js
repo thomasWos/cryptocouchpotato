@@ -94,6 +94,8 @@ function main() {
 }
 
 function exchangeCodeToToken(pCode) {
+    console.info("Code: " + pCode);
+
     let xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
