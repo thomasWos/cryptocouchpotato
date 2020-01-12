@@ -1,11 +1,18 @@
+h1 {
+    text-align: center;
+}
+
+div {
+    margin: 5px;
+}
+
 table {
     border-collapse: collapse;
     margin: 15px;
 }
 
 #cryptoTable {
-    margin-left:auto; 
-    margin-right:auto;
+    margin:auto;
 }
 
 td,
@@ -21,4 +28,15 @@ th {
 
 tr:nth-child(even) {
     background-color: #f8f8f8;
+}
+
+.clearfix {
+    overflow: auto;
+}
+.float-right {
+    float: right;
+}
+
+#signature {
+    text-align: right;
 }
