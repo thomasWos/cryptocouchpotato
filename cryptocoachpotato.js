@@ -8,7 +8,10 @@ const TOKEN_URL = "https://api.coinbase.com/oauth/token";
 
 const COINBASE_CLIENT_ID = "aef108d150b98e03eaa26334ec346213a02a837c144ab9eda556866513c1031c";
 const COINBASE_CLIENT_SECRET = "932a5e5807d78b98f39a3861040c9be13e352e5305085bc12143b42e4a785569";
-const COINBASE_REDIRECT_URI = "https://cryptocouchpotato.com"
+const COINBASE_REDIRECT_URI = "https://cryptocouchpotato.com";
+
+const ACCESS_TOKEN = 'access_token';
+const REFRESH_TOKEN = 'refresh_token';
 
 class Crypto {
     constructor(number, cryptoJson, totalMarket, totalCrypto) {
@@ -76,6 +79,12 @@ let totalPortefolioInput = document.getElementById("totalPortefolio");
 let crytoController = new CrytoController();
 
 function main() {
+    let accessToken = localStorage.getItem(ACCESS_TOKEN);
+    let refreshToken = localStorage.getItem(REFRESH_TOKEN);
+    if (accessToken != null && refreshToken != null) {
+        fetchUserInfo();
+    }
+
     let url = new URL(window.location.href);
     let codeParam = url.searchParams.get("code");
     if (codeParam != null) {
@@ -98,20 +107,48 @@ function exchangeCodeToToken(pCode) {
     xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             console.info(this.responseText);
+            let response = JSON.parse(this.responseText);
+            localStorage.setItem(ACCESS_TOKEN, response.access_token);
+            localStorage.setItem(REFRESH_TOKEN, response.refresh_token);
+
+            fetchUserInfo();
         }
     };
 
     xmlhttp.open('POST', TOKEN_URL, true);
     xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-
     let param = 'grant_type=authorization_code';
     param = param + '&code=' + pCode;
     param = param + '&client_id=' + COINBASE_CLIENT_ID;
-    // param = param + '&client_secret=' + COINBASE_CLIENT_SECRET;
+    param = param + '&client_secret=' + COINBASE_CLIENT_SECRET;
     param = param + '&redirect_uri=' + COINBASE_REDIRECT_URI;
     console.info('param : ' + param);
     xmlhttp.send(param);
 }
+
+
+function fetchUserInfo() {
+    let accessToken = localStorage.getItem(ACCESS_TOKEN);
+    if (!accessToken) {
+        console.info('No token, cannot fetch user info');
+        return;
+    }
+
+    const baseUrl = 'https://api.coinbase.com'
+    const path = '/v2/user';
+
+    let httpReq = new XMLHttpRequest();
+    httpReq.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            console.info(this.responseText);
+        }
+    };
+
+    httpReq.open('GET', baseUrl + path, true);
+    httpReq.setRequestHeader('Authorization', 'Bearer ' + accessToken);
+    xmlhttp.send();
+}
+
 
 function initTable(data) {
     let totalMarket = data.map(toMarket).reduce(sum);
