@@ -146,6 +146,7 @@ function fetchUserInfo() {
 
     httpReq.open('GET', baseUrl + path, true);
     httpReq.setRequestHeader('Authorization', 'Bearer ' + accessToken);
+    httpReq.setRequestHeader('CB-VERSION', '2019-01-23');
     httpReq.send();
 }
 
