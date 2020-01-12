@@ -141,6 +141,8 @@ function fetchUserInfo() {
     httpReq.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             console.info(this.responseText);
+        } else if (this.status == 401) {
+            refreshToken();
         }
     };
 
@@ -148,6 +150,34 @@ function fetchUserInfo() {
     httpReq.setRequestHeader('Authorization', 'Bearer ' + accessToken);
     httpReq.setRequestHeader('CB-VERSION', '2019-01-23');
     httpReq.send();
+}
+
+function refreshToken() {
+    let refreshToken = localStorage.getItem(REFRESH_TOKEN);
+    if (!refreshToken) {
+        console.info('No refresh token, cancel refresh token request');
+    }
+
+    let xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            console.info(this.responseText);
+            let response = JSON.parse(this.responseText);
+            localStorage.setItem(ACCESS_TOKEN, response.access_token);
+            localStorage.setItem(REFRESH_TOKEN, response.refresh_token);
+
+            fetchUserInfo();
+        }
+    };
+
+    xmlhttp.open('POST', TOKEN_URL, true);
+    xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    let param = 'grant_type=refresh_token';
+    param = param + '&client_id=' + COINBASE_CLIENT_ID;
+    param = param + '&client_secret=' + COINBASE_CLIENT_SECRET;
+    param = param + '&refresh_token=' + refreshToken;
+    console.info('param : ' + param);
+    xmlhttp.send(param);
 }
 
 
