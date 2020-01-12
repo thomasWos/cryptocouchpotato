@@ -146,7 +146,7 @@ function fetchUserInfo() {
 
     httpReq.open('GET', baseUrl + path, true);
     httpReq.setRequestHeader('Authorization', 'Bearer ' + accessToken);
-    xmlhttp.send();
+    httpReq.send();
 }
 
 
