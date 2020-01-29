@@ -70,6 +70,10 @@ const resources = [
     {
         name: "Orchid",
         img: "orchid.ico"
+    },
+    {
+        name: "Cosmos",
+        img: "cosmos.webp"
     }
 ];
 
