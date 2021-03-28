@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crypto Couch Potato</title>
+
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+
+  <body>
+    <h1>Crypto Couch Potato</h1>
+    <div class="clearfix">
+      <table>
+        <tr>
+          <td>Total portefolio</td>
+          <td class="td-right">
+            $<input
+              type="number"
+              min="0"
+              step="100"
+              id="totalPortefolioInput"
+            />
+          </td>
+        </tr>
+
+        <tr>
+          <td>Ratio crypto</td>
+          <td id="ratioCryptoTd" class="td-right"></td>
+        </tr>
+        <tr>
+          <td>Ratio cash</td>
+          <td id="ratioCashTd" class="td-right"></td>
+        </tr>
+
+        <tr>
+          <td>Change ratio</td>
+          <td>
+            <input
+              type="range"
+              id="cryptoRatioRangeInput"
+              min="0"
+              max="100"
+              step="5"
+            />
+          </td>
+        </tr>
+
+        <tr>
+          <td>Total market</td>
+          <td id="totalMarketElem" class="td-right"></td>
+        </tr>
+      </table>
+    </div>
+
+    <table id="cryptoTable">
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Mkt Cap</th>
+        <th>Dominance</th>
+        <th>Price</th>
+        <th>Target</th>
+      </tr>
+    </table>
+
+    <script src="app.js"></script>
+  </body>
+</html>

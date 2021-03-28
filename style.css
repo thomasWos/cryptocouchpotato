@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 10px;
+}
+
+table {
+  border-collapse: collapse;
+  margin: 10px;
+}
+
+#cryptoTable {
+  margin: auto;
+}
+
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 15px;
+}
+
+.td-right {
+  text-align: right;
+}
+
+tr:nth-child(even) {
+  background-color: #f8f8f8;
+}
+
+.clearfix {
+  overflow: auto;
+}
