@@ -13,16 +13,17 @@ body {
 
 h1 {
   text-align: center;
-  margin-top: 10px;
+  margin: 20px;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
 }
 
 table {
-  border-collapse: collapse;
   margin: 10px;
-}
-
-#cryptoTable {
-  margin: auto;
+  border-collapse: collapse;
 }
 
 td,
@@ -40,6 +41,6 @@ tr:nth-child(even) {
   background-color: #f8f8f8;
 }
 
-.clearfix {
-  overflow: auto;
+#infoTable {
+  /* width: 400px; */
 }
